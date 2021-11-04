@@ -8,6 +8,7 @@ import com.devsuperior.bds02.services.exceptions.ResourceNotFoundException;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
 
@@ -20,7 +21,7 @@ public class EventService {
     @Autowired
     private CityRepository cityRepository;
 
-
+    @Transactional
     public EventDTO update(Long id, EventDTO dto) {
         try {
             Event entity = repository.getOne(id);

@@ -12,6 +12,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -26,12 +27,14 @@ public class CityService {
     private EventRepository eventRepository;
 
 
+    @Transactional(readOnly = true)
     public List<CityDTO> findAll() {
         List<City> resultList = repository.findAll(Sort.by("name"));
 
         return resultList.stream().map(city -> new CityDTO(city)).collect(Collectors.toList());
     }
 
+    @Transactional
     public CityDTO insert(CityDTO dto) {
         City entity = new City();
         BeanUtils.copyProperties(dto, entity);
